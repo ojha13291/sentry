@@ -1,9 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+
 import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
+import chatRoutes from './routes/chat.route.js';
+
 import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 dotenv.config();
 const PORT = process.env.PORT 
@@ -13,14 +17,15 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json()); 
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes); // Example for user routes
+app.use('/api/users', userRoutes); // user routes
+app.use('/api/chat', chatRoutes); // chat routes
 
-app.use(cookieParser()); // Middleware to parse cookies
+app.use(cookieParser()); 
 
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    connectDB(); // Connect to the database
+    connectDB(); 
 });
