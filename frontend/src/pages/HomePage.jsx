@@ -36,6 +36,11 @@ const HomePage = () => {
   const { mutate: sendRequestMutation, isPending } = useMutation({
     mutationFn: sendFriendRequest,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] }),
+    onError: (error) => {
+      // Display the error message to understand what's wrong
+      console.error('Friend request error:', error.response?.data?.message);
+      alert(error.response?.data?.message || 'Failed to send friend request');
+    }
   });
 
   useEffect(() => {
